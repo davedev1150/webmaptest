@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
+        <style>
+        #map {
+            width: 1558px;
+            height: 778px;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
+        <script src="data/db_INSupdate_1.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[14.235671183249998,100.82504828535696],[16.90475466675,106.17697341464304]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_GoogleMaps_0');
+        map.getPane('pane_GoogleMaps_0').style.zIndex = 400;
+        var layer_GoogleMaps_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleMaps_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 18
+        });
+        layer_GoogleMaps_0;
+        map.addLayer(layer_GoogleMaps_0);
+        function pop_db_INSupdate_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Name</th>\
+                        <td>' + (feature.properties['Name'] !== null ? autolinker.link(feature.properties['Name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LAT</th>\
+                        <td>' + (feature.properties['LAT'] !== null ? autolinker.link(feature.properties['LAT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LONG</th>\
+                        <td>' + (feature.properties['LONG'] !== null ? autolinker.link(feature.properties['LONG'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">lat_degree</th>\
+                        <td>' + (feature.properties['lat_degree'] !== null ? autolinker.link(feature.properties['lat_degree'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">lat_minute</th>\
+                        <td>' + (feature.properties['lat_minute'] !== null ? autolinker.link(feature.properties['lat_minute'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">lat_second</th>\
+                        <td>' + (feature.properties['lat_second'] !== null ? autolinker.link(feature.properties['lat_second'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">long_degree</th>\
+                        <td>' + (feature.properties['long_degree'] !== null ? autolinker.link(feature.properties['long_degree'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">long_minute</th>\
+                        <td>' + (feature.properties['long_minute'] !== null ? autolinker.link(feature.properties['long_minute'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">long_second</th>\
+                        <td>' + (feature.properties['long_second'] !== null ? autolinker.link(feature.properties['long_second'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">E</th>\
+                        <td>' + (feature.properties['E'] !== null ? autolinker.link(feature.properties['E'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">N</th>\
+                        <td>' + (feature.properties['N'] !== null ? autolinker.link(feature.properties['N'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ZONE</th>\
+                        <td>' + (feature.properties['ZONE'] !== null ? autolinker.link(feature.properties['ZONE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">STA</th>\
+                        <td>' + (feature.properties['STA'] !== null ? autolinker.link(feature.properties['STA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">OFFSET</th>\
+                        <td>' + (feature.properties['OFFSET'] !== null ? autolinker.link(feature.properties['OFFSET'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">U/S or D/S</th>\
+                        <td>' + (feature.properties['U/S or D/S'] !== null ? autolinker.link(feature.properties['U/S or D/S'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">INS_Sensor_EL</th>\
+                        <td>' + (feature.properties['INS_Sensor_EL'] !== null ? autolinker.link(feature.properties['INS_Sensor_EL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Ground_OG</th>\
+                        <td>' + (feature.properties['Ground_OG'] !== null ? autolinker.link(feature.properties['Ground_OG'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LAT_install</th>\
+                        <td>' + (feature.properties['LAT_install'] !== null ? autolinker.link(feature.properties['LAT_install'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LONG_install</th>\
+                        <td>' + (feature.properties['LONG_install'] !== null ? autolinker.link(feature.properties['LONG_install'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">E_install</th>\
+                        <td>' + (feature.properties['E_install'] !== null ? autolinker.link(feature.properties['E_install'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">N_install</th>\
+                        <td>' + (feature.properties['N_install'] !== null ? autolinker.link(feature.properties['N_install'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">STA_install</th>\
+                        <td>' + (feature.properties['STA_install'] !== null ? autolinker.link(feature.properties['STA_install'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">OFFSET_install</th>\
+                        <td>' + (feature.properties['OFFSET_install'] !== null ? autolinker.link(feature.properties['OFFSET_install'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">U/S or D/S_install</th>\
+                        <td>' + (feature.properties['U/S or D/S_install'] !== null ? autolinker.link(feature.properties['U/S or D/S_install'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PROJ_ID</th>\
+                        <td>' + (feature.properties['PROJ_ID'] !== null ? autolinker.link(feature.properties['PROJ_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">RID_NUM</th>\
+                        <td>' + (feature.properties['RID_NUM'] !== null ? autolinker.link(feature.properties['RID_NUM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">YEAR</th>\
+                        <td>' + (feature.properties['YEAR'] !== null ? autolinker.link(feature.properties['YEAR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">INS_type</th>\
+                        <td>' + (feature.properties['INS_type'] !== null ? autolinker.link(feature.properties['INS_type'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">install_type</th>\
+                        <td>' + (feature.properties['install_type'] !== null ? autolinker.link(feature.properties['install_type'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Description</th>\
+                        <td>' + (feature.properties['Description'] !== null ? autolinker.link(feature.properties['Description'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['คอลัมน์1'] !== null ? autolinker.link(feature.properties['คอลัมน์1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['field_32'] !== null ? autolinker.link(feature.properties['field_32'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['field_33'] !== null ? autolinker.link(feature.properties['field_33'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['field_34'] !== null ? autolinker.link(feature.properties['field_34'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['field_35'] !== null ? autolinker.link(feature.properties['field_35'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['field_36'] !== null ? autolinker.link(feature.properties['field_36'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['field_37'] !== null ? autolinker.link(feature.properties['field_37'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['field_38'] !== null ? autolinker.link(feature.properties['field_38'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['field_39'] !== null ? autolinker.link(feature.properties['field_39'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['field_40'] !== null ? autolinker.link(feature.properties['field_40'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['field_41'] !== null ? autolinker.link(feature.properties['field_41'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['field_42'] !== null ? autolinker.link(feature.properties['field_42'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['field_43'] !== null ? autolinker.link(feature.properties['field_43'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['field_44'] !== null ? autolinker.link(feature.properties['field_44'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_db_INSupdate_1_0() {
+            return {
+                pane: 'pane_db_INSupdate_1',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(145,82,45,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_db_INSupdate_1');
+        map.getPane('pane_db_INSupdate_1').style.zIndex = 401;
+        map.getPane('pane_db_INSupdate_1').style['mix-blend-mode'] = 'normal';
+        var layer_db_INSupdate_1 = new L.geoJson(json_db_INSupdate_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_db_INSupdate_1',
+            layerName: 'layer_db_INSupdate_1',
+            pane: 'pane_db_INSupdate_1',
+            onEachFeature: pop_db_INSupdate_1,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_db_INSupdate_1_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_db_INSupdate_1);
+        map.addLayer(layer_db_INSupdate_1);
+        var osmGeocoder = new L.Control.Geocoder({
+            collapsed: true,
+            position: 'topleft',
+            text: 'Search',
+            title: 'Testing'
+        }).addTo(map);
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .className += ' fa fa-search';
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .title += 'Search for a place';
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/db_INSupdate_1.png" /> db_INS update': layer_db_INSupdate_1,"Google Maps": layer_GoogleMaps_0,}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
